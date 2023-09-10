@@ -76,11 +76,10 @@ class Table {
     val price: Long = 2
     var rank: Rank = FAIL
     var prize: Long by notNull()
-    var isWin :Boolean = false
     lateinit var winsBall: Set<Int>
     var bonusBallMatchYN : Boolean = false
     fun checkRank(target: PowerBall) {
-       this.winsBall = this.powerBall.balls.containGet(target.balls)
+       this.winsBall = this.powerBall.balls.intersect(target.balls)
        this.bonusBallMatchYN = this.powerBall.bonusBall == target.bonusBall
 
         rank = when {
@@ -95,7 +94,6 @@ class Table {
             winsBall.isEmpty() && bonusBallMatchYN -> NO_0
             else -> FAIL
         }
-        isWin = rank != FAIL
     }
 
     fun checkPrize(totalMoney: Long) {
@@ -133,10 +131,6 @@ class Table {
         NO_0(4),
         FAIL(0)
     }
-}
-
-fun Set<Int>.containGet(target: Set<Int>): Set<Int> {
-    return target.filter { this.contains(it) }.mapTo(mutableSetOf()) { it }
 }
 
 
