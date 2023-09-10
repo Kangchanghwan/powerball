@@ -2,7 +2,7 @@ fun main() {
     var index = 0;
 
     do {
-        val num = readLine()!!.toInt()
+        val num = readln().toInt()
         val round = Round(index = ++index)
 
         round.buy(num)
