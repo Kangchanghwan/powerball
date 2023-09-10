@@ -2,8 +2,10 @@ import Table.Rank.*
 import kotlin.properties.Delegates.notNull
 import kotlin.random.Random
 
-data class RandomNumberList(
-    private var allNumber: MutableList<Int> = (1..69).mapTo(mutableListOf()) { it }
+data class  NumberList(
+    private val start: Int,
+    private val end: Int,
+    private var allNumber: MutableList<Int> = (start..end).mapTo(mutableListOf()) { it }
 ) {
     fun getRandomNumber(): Int {
         val nextInt = Random.nextInt(0, allNumber.size - 1)
@@ -18,9 +20,9 @@ class PowerBall {
     val bonusBall: Int
 
     init {
-        val randomNumberList = RandomNumberList()
-        balls = (1..5).mapTo(mutableSetOf()) { randomNumberList.getRandomNumber() }
-        bonusBall = Random.nextInt(1, 29)
+        val numberList = NumberList(1, 69)
+        balls = (1..5).mapTo(mutableSetOf()) { numberList.getRandomNumber() }
+        bonusBall = NumberList(1, 29).getRandomNumber()
     }
 
     override fun equals(other: Any?): Boolean {

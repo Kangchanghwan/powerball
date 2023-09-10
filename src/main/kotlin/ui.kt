@@ -34,9 +34,9 @@ data class UI(
         println("$round\t회차\tPowerBall")
         println("당첨번호 : $target")
         println("-------------------당첨 내역----------------------")
-        println("당첨순위\t\t\t번호\t\t\t\t당첨번호\t보너스볼당첨여부")
+        println("당첨순위\t\t\t번호\t\t\t\t당첨개수\t보너스볼당첨여부")
         tables.filter { it.rank != Table.Rank.FAIL }.forEach {
-            println("${it.rank}\t${it.powerBall}\t${it.winsBall.joinToString("\t")}\t${it.bonusBallMatchYN}")
+            println("${it.rank}\t${it.powerBall}\t${it.winsBall.size}\t\t${it.bonusBallMatchYN}")
         }
         println("-----------------------------------------------")
 
