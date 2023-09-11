@@ -1,4 +1,6 @@
-import Table.Rank.*
+package v1
+
+import v1.Table.Rank.*
 import kotlin.properties.Delegates.notNull
 import kotlin.random.Random
 
@@ -8,9 +10,9 @@ data class  NumberList(
     private var allNumber: MutableList<Int> = (start..end).mapTo(mutableListOf()) { it }
 ) {
     fun getRandomNumber(): Int {
-        val nextInt = Random.nextInt(0, allNumber.size - 1)
-        val result = this.allNumber[nextInt]
-        this.allNumber -= this.allNumber[nextInt]
+        val randomInt = Random.nextInt(0, allNumber.size - 1)
+        val result = this.allNumber[randomInt]
+        this.allNumber -= this.allNumber[randomInt]
         return result
     }
 }
@@ -23,21 +25,11 @@ class PowerBall {
         val numberList = NumberList(1, 69)
         balls = (1..5).mapTo(mutableSetOf()) { numberList.getRandomNumber() }
         bonusBall = NumberList(1, 29).getRandomNumber()
-    }
 
-    override fun equals(other: Any?): Boolean {
-        return when (other) {
-            is PowerBall ->
-                this.balls.containsAll(other.balls) && this.bonusBall == other.bonusBall
-
-            else -> false
+        require(balls.size == 5) {
+            "PowerBall은 5개의 메인 숫자가 필요합니다. 현재: ${balls.size}"
         }
-    }
 
-    override fun hashCode(): Int {
-        var result = balls.hashCode()
-        result = 31 * result + bonusBall
-        return result
     }
 
     override fun toString(): String {
@@ -85,7 +77,7 @@ class Table {
        this.bonusBallMatchYN = this.powerBall.bonusBall == target.bonusBall
 
         rank = when {
-            this.powerBall == target -> NO_1
+            winsBall.size == 5 && bonusBallMatchYN  -> NO_1
             winsBall.size == 5 && !bonusBallMatchYN -> NO_2
             winsBall.size == 4 && bonusBallMatchYN -> NO_3
             winsBall.size == 4 && !bonusBallMatchYN -> NO_4
@@ -121,17 +113,17 @@ class Table {
     }
 
 
-    enum class Rank(val value: Long) {
-        NO_1(0),
-        NO_2(1_000_000),
-        NO_3(50_000),
-        NO_4(100),
-        NO_5(100),
-        NO_6(7),
-        NO_7(7),
-        NO_8(4),
-        NO_0(4),
-        FAIL(0)
+    enum class Rank(val value: Long, val displayName: String) {
+        NO_1(0, "1등"),
+        NO_2(1_000_000, "2등"),
+        NO_3(50_000, "3등"),
+        NO_4(100,"4등"),
+        NO_5(100, "5등"),
+        NO_6(7, "6등"),
+        NO_7(7, "7등"),
+        NO_8(4,"8등"),
+        NO_0(4,"9등"),
+        FAIL(0, "꽝")
     }
 }
 
