@@ -2,12 +2,14 @@ package v1
 
 fun main() {
     var index = 0;
-
     val rounds: MutableList<Round> = mutableListOf()
 
-    do {
-        print("구매할 복권의 수를 입력해 주세요: ")
+    while (true) {
+        print("(1 < n) 구매할 복권의 수를 입력해 주세요: ")
         val num = readln().toInt()
+
+        if(num < 1) return
+
         val round = Round(index = ++index)
 
         round.buy(num)
@@ -24,8 +26,7 @@ fun main() {
             totalWining = round.totalWining,
             rounds = rounds
         ).draw()
-
-    } while (num != 0)
+    }
 }
 
 

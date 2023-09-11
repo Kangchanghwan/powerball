@@ -29,7 +29,6 @@ class PowerBall {
         require(balls.size == 5) {
             "PowerBall은 5개의 메인 숫자가 필요합니다. 현재: ${balls.size}"
         }
-
     }
 
     override fun toString(): String {
